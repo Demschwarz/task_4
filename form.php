@@ -1,10 +1,10 @@
 <html>
   <head>
   	 <meta name="lera" content="text/html: charset=utf-8">
-  	 <title>Back4</title>
+  	 <title>Task Fout</title>
      <meta name="lera" content="text/html: charset=utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
-  	 
+  	 <style src='./style.css'></style>
     
   </head>
   <body>
@@ -12,17 +12,13 @@
 <?php
 if (!empty($messages)) {
   print('<div id="messages">');
-  // Выводим все сообщения.
   foreach ($messages as $message) {
     print($message);
   }
   print('</div>');
 }
-
-// Далее выводим форму отмечая элементы с ошибками классом error
-// и задавая начальные значения элементов ранее сохраненными.
 ?>
-	<div class="container" id="content">
+	<div>
     	<form action="" method="POST">
     		<div class="group">
                 <label>Name:</label>
@@ -49,23 +45,23 @@ if (!empty($messages)) {
     				<?php } ?>
   				</select>
             </div>
-      		<span <?php if ($errors['year']) {print 'id="error"';} ?> >Sex:</span>
+      		<span <?php if ($errors['year']) {print 'id="error"';} ?> >Gender:</span>
             <br>
             <div class="group2">
                 <label class="group3">
-                    <input type="radio" name="sex" value="female" <?php if($values['sex']=='female') {print'checked';}?>>female
+                    <input type="radio" name="gender" value="female" <?php if($values['gender']=='female') {print'checked';}?>>Female
                 </label>
             </div>
             <div class="group2">
                 <label class="group3">
-                    <input type="radio" name="sex" value="male" <?php if($values['sex']=='male') {print'checked';}?>>male
+                    <input type="radio" name="gender" value="male" <?php if($values['gender']=='male') {print'checked';}?>>Male
                 </label>
             </div>
       		<div class="group">
                 Number of lungs <br>
                 <div class="group2">
                     <label class="group3">
-                        <input type="radio" name="lungs" value="0" <?php if($values['lungs']=='0') {print'checked';}?>>0
+                        <input type="radio" name="lungs" value="0" <?php if($values['lungs']=='0') {print'checked';}?>>I got no
                     </label>
                 </div>
                 <div class="group2">
@@ -75,7 +71,17 @@ if (!empty($messages)) {
                 </div>
                 <div class="group2">
                     <label class="group3">
-                        <input type="radio" name="kon" value="2" <?php if($values['lungs']=='2') {print'checked';}?>>2
+                        <input type="radio" name="lungs" value="2" <?php if($values['lungs']=='2') {print'checked';}?>>2
+                    </label>
+                </div>
+                <div class="group2">
+                    <label class="group3">
+                        <input type="radio" name="lungs" value="2" <?php if($values['lungs']=='3') {print'checked';}?>>3
+                    </label>
+                </div>
+                <div class="group2">
+                    <label class="group3">
+                        <input type="radio" name="lungs" value="2" <?php if($values['lungs']=='4') {print'checked';}?>>4
                     </label>
                 </div>
             </div>
@@ -90,10 +96,10 @@ if (!empty($messages)) {
                 } ?>
                 </select>
             <div class="group">
-                <label for="comment">biography</label>
+                <label for="comment">Your biography</label>
                 <textarea class="group1" rows="10" name="bio" <?php if ($errors['bio']) {print 'id="error"';} ?>><?php print $values['bio']; ?></textarea>
             </div>
-            <label class="group3" id="mychek"><input class="form-check-input" type="checkbox" name="check" <?php if (!$errors['check']) {print 'checked';} else {print 'id="error"';} ?>> I'm agree </label>
+            <label class="group3" id="mychek"><input class="form-check-input" type="checkbox" name="check" <?php if (!$errors['check']) {print 'checked';} else {print 'id="error"';} ?>> I do agree with the agreement </label>
       		<input type="submit" value="ok" />
     	</form>
     </div>

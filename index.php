@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors['fio'] = !empty($_COOKIE['fio_error']);
   $errors['email'] = !empty($_COOKIE['email_error']);
   $errors['year'] = !empty($_COOKIE['year_error']);
-  $errors['sex'] = !empty($_COOKIE['sex_error']);
+  $errors['gender'] = !empty($_COOKIE['gender_error']);
   $errors['lungs'] = !empty($_COOKIE['lungs_error']);
   $errors['abilities'] = !empty($_COOKIE['abilities_error']);
   $errors['bio'] = !empty($_COOKIE['bio_error']);
@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           $messages[] = '<div id="error">Пожалуйста, выберете год рождения</div>';
       }
   }
-  if ($errors['sex']) {
+  if ($errors['gender']) {
       // Удаляем куку, указывая время устаревания в прошлом.
-      setcookie('sex_error', '', 100000);
+      setcookie('gender_error', '', 100000);
       // Выводим сообщение.
-      if ($_COOKIE['sex_error'] == "1") {
+      if ($_COOKIE['gender_error'] == "1") {
           $messages[] = '<div id="error">Пожалйста, укажите Ваш пол.</div>';
       }
   }
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
   $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
   $values['year'] = empty($_COOKIE['year_value']) ? '' : $_COOKIE['year_value'];
-  $values['sex'] = empty($_COOKIE['sex_value']) ? '' : $_COOKIE['sex_value'];
+  $values['gender'] = empty($_COOKIE['gender_value']) ? '' : $_COOKIE['gender_value'];
   $values['lungs'] = empty($_COOKIE['lungs_value']) ? '' : $_COOKIE['lungs_value'];
   if (!empty($_COOKIE['abilities_value'])) {
       $abilities_value = unserialize($_COOKIE['abilities_value']);
@@ -203,18 +203,19 @@ else {
   }
   
   
-  if (empty($_POST['sex'])) {
-      setcookie('sex_error', '1', 0);
+  if (empty($_POST['gender'])) {
+      setcookie('gender_error', '1', 0);
       $errors = TRUE;
   }
   else {
-      setcookie('sex_value', $_POST['sex'], time() + 365 * 24 * 60 * 60);
+      setcookie('gender_value', $_POST['gender'], time() + 365 * 24 * 60 * 60);
   }
   
   
   if (empty($_POST['lungs'])) {
-      setcookie('lungs_error', '1', 0);
       setcookie('lungs_value', '', 0);
+      // проставили кукис, отмеченные ошибкой
+      setcookie('lungs_error', '1', 0);
       $errors = TRUE;
   }
   else {
@@ -275,7 +276,7 @@ else {
     setcookie('fio_error', '', 100000);
     setcookie('email_error', '', 100000);
     setcookie('year_error', '', 100000);
-    setcookie('sex_error', '', 100000);
+    setcookie('gender_error', '', 100000);
     setcookie('lungs_error', '', 100000);
     setcookie('abilities_error', '', 100000);
     setcookie('bio_error', '', 100000);
@@ -289,12 +290,12 @@ else {
   $db = new PDO('mysql:host=localhost;dbname=u20419', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
   
   //Еще вариант
-   $stmt = $db->prepare("INSERT INTO application (name, email, birth, sex, numlimbs, abilities, biography) VALUES (:firstname, :nemail, :year, :valsex, :numlimbs, :abil, :biog)");
+   $stmt = $db->prepare("INSERT INTO application (name, email, birth, gender, numlimbs, abilities, biography) VALUES (:firstname, :nemail, :year, :valgender, :numlimbs, :abil, :biog)");
    $stmt->bindParam(':numlimbs', $numlimbs);
    $stmt->bindParam(':abil', $abil);
    $stmt->bindParam(':biog', $biog);
    $stmt->bindParam(':year', $year);
-   $stmt->bindParam(':valsex', $valsex);
+   $stmt->bindParam(':valgender', $valgender);
    $stmt->bindParam(':firstname', $firstname);
    $stmt->bindParam(':nemail', $nemail);
 
@@ -302,7 +303,7 @@ else {
    $abil = serialize($_POST['abilities']);
    $biog = $_POST['bio'];
    $year = (int)$_POST['year'];
-   $valsex = $_POST['sex'];
+   $valgender = $_POST['gender'];
    $firstname = $_POST['fio'];
    $nemail = $_POST['email'];
    $stmt->execute();
